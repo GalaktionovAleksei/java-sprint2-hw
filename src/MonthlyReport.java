@@ -11,7 +11,7 @@ public class MonthlyReport {
 
 
     void createReportMonth(){
-        if (!monthlyReport.isEmpty()) {
+        if (recognizeReportMonthlyIsEmpty()) {
             for (Integer key : monthlyReport.keySet()){
                 System.out.println("Отчет за " + getMonthName(key));
                 String[]maxProfitMonth  = getMaxProfitMonth(key);

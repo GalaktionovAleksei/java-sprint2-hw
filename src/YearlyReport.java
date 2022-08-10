@@ -2,11 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class YearlyReport {
-    ArrayList<YearlyRecord> yearlyRecords = new ArrayList<>();
     HashMap<Integer, ArrayList<YearlyRecord>> yearlyReport = new HashMap<>();
 
     void createReportYear(){
-        if (!yearlyRecords.isEmpty()) {
+        if (recognizeReportYearIsEmpty()) {
             System.out.println("Отчет за 2021 год");
             int[][] profitYear = getProfitYear();
             for (int i = 0; i < profitYear.length; i++){
@@ -30,7 +29,7 @@ public class YearlyReport {
     }
     int getSumOutcomeYear(int month){
         int outcome = 0;
-        yearlyRecords = yearlyReport.get(month);
+        ArrayList<YearlyRecord> yearlyRecords = yearlyReport.get(month);
         for (int j = 0; j < yearlyRecords.size(); j++) {
             if (yearlyRecords.get(j).isExpense){
                 outcome += yearlyRecords.get(j).amount;
@@ -40,7 +39,7 @@ public class YearlyReport {
     }
     int getSumIncomeYear(int month){
         int income = 0;
-        yearlyRecords = yearlyReport.get(month);
+        ArrayList<YearlyRecord> yearlyRecords = yearlyReport.get(month);
             for (int j = 0; j < yearlyRecords.size(); j++) {
                 if (!yearlyRecords.get(j).isExpense){
                     income += yearlyRecords.get(j).amount;
@@ -51,7 +50,7 @@ public class YearlyReport {
     int getAverageIncome(){
         int income = 0;
         for (int i = 0; i < yearlyReport.size(); i++){
-            yearlyRecords = yearlyReport.get(i+1);
+            ArrayList<YearlyRecord> yearlyRecords = yearlyReport.get(i+1);
             for (int j = 0; j < yearlyRecords.size(); j++) {
                 if (!yearlyRecords.get(j).isExpense){
                     income += yearlyRecords.get(j).amount;
@@ -63,7 +62,7 @@ public class YearlyReport {
     int getAverageExpense(){
         int expense = 0;
         for (int i = 0; i < yearlyReport.size(); i++) {
-            yearlyRecords = yearlyReport.get(i + 1);
+            ArrayList<YearlyRecord> yearlyRecords = yearlyReport.get(i + 1);
             for (int j = 0; j < yearlyRecords.size(); j++) {
                 if (yearlyRecords.get(j).isExpense) {
                     expense += yearlyRecords.get(j).amount;
@@ -76,7 +75,7 @@ public class YearlyReport {
     int[][] getProfitYear(){
         int[][] ProfitYear = new int[3][2];
         for (int i = 0; i < yearlyReport.size(); i++){
-            yearlyRecords = yearlyReport.get(i+1);
+            ArrayList<YearlyRecord> yearlyRecords = yearlyReport.get(i+1);
             int profit = 0;
             int expense = 0;
             for (int j = 0; j < yearlyRecords.size(); j++) {
@@ -100,7 +99,7 @@ public class YearlyReport {
         String content = ReadFile.readFileContentsOrNull("resources/y.2021.csv");
         String[] lines = content.split("\n");
         for (int i = 1; i < 4; i++) {
-            yearlyRecords = new ArrayList<>();
+            ArrayList<YearlyRecord> yearlyRecords = new ArrayList<>();
             yearlyReport.put(i, yearlyRecords);
             for (int j = 1; j < lines.length; j++) {
                 String[] line = lines[j].split(",");
