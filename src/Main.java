@@ -16,8 +16,13 @@ public class Main {
             }else if (userInput == 2){
                 yearlyReport.readReportYear();
             }else if (userInput == 3){
-                    compare.compareSumIncome(yearlyReport, monthlyReport);
-                    compare.compareSumOutcome(yearlyReport, monthlyReport);
+                if (yearlyReport.recognizeReportYearIsEmpty() && monthlyReport.recognizeReportMonthlyIsEmpty()) {
+                        compare.compareSumIncome(yearlyReport, monthlyReport);
+                        compare.compareSumOutcome(yearlyReport, monthlyReport);
+                }else {
+                    System.out.println("Для сравнения, сначала считайте годовой и месячные отчёты");
+                }
+
             }else if (userInput == 4){
                 monthlyReport.createReportMonth();
             }else if (userInput == 5) {
