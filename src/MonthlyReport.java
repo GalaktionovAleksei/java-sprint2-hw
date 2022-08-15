@@ -1,14 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/*  Антон, Привет!
-    Спасибо за положительную оценку! :)
-    Вроде все указанные тобой моменты поправил, надеюсь код стал только чище!
-*/
 public class MonthlyReport {
 
     HashMap<Integer,ArrayList<MonthlyRecord>> monthlyReport = new HashMap<>();
-
 
     void createReportMonth(){
         if (recognizeReportMonthlyIsEmpty()) {
@@ -35,31 +30,28 @@ public class MonthlyReport {
         }return monthName;
     }
     boolean recognizeReportMonthlyIsEmpty(){
-        if (monthlyReport.isEmpty()) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return !monthlyReport.isEmpty();
     }
 
     int getSumOutcomeMonth(int month){
         int outcomeMonth = 0;
         ArrayList<MonthlyRecord> monthlyRecords = monthlyReport.get(month);
-        for (int i = 0; i < monthlyRecords.size(); i++){
-            if (monthlyRecords.get(i).isExpense){
-                outcomeMonth += (monthlyRecords.get(i).quantity * monthlyRecords.get(i).sumOfOne);
+        for (MonthlyRecord monthlyRecord : monthlyRecords) {
+            if (monthlyRecord.isExpense) {
+                outcomeMonth += (monthlyRecord.quantity * monthlyRecord.sumOfOne);
             }
-        }return outcomeMonth;
+        }
+        return outcomeMonth;
     }
     int getSumIncomeMonth(int month){
         int incomeMonth = 0;
         ArrayList<MonthlyRecord> monthlyRecords = monthlyReport.get(month);
-        for (int i = 0; i < monthlyRecords.size(); i++){
-            if (!monthlyRecords.get(i).isExpense){
-                incomeMonth += (monthlyRecords.get(i).quantity * monthlyRecords.get(i).sumOfOne);
+        for (MonthlyRecord monthlyRecord : monthlyRecords) {
+            if (!monthlyRecord.isExpense) {
+                incomeMonth += (monthlyRecord.quantity * monthlyRecord.sumOfOne);
             }
-        }return incomeMonth;
+        }
+        return incomeMonth;
     }
 
     String[] getMaxProfitMonth (int key){
@@ -67,11 +59,11 @@ public class MonthlyReport {
         String[] maxProfitMonth = new String[2];
         int maxProfit = 0;
         String nameMaxProfitMonth = null;
-        for(int i = 0; i < monthlyRecords.size(); i++) {
-            if (!monthlyRecords.get(i).isExpense){
-                int saveMax = monthlyRecords.get(i).quantity * monthlyRecords.get(i).sumOfOne;
-                String nameSaveProfit = monthlyRecords.get(i).itemName;
-                if(maxProfit <= saveMax){
+        for (MonthlyRecord monthlyRecord : monthlyRecords) {
+            if (!monthlyRecord.isExpense) {
+                int saveMax = monthlyRecord.quantity * monthlyRecord.sumOfOne;
+                String nameSaveProfit = monthlyRecord.itemName;
+                if (maxProfit <= saveMax) {
                     maxProfit = saveMax;
                     nameMaxProfitMonth = nameSaveProfit;
                 }
@@ -87,11 +79,11 @@ public class MonthlyReport {
         String[] maxExpenseMonth = new String[2];
         int maxExpense = 0;
         String nameMaxExpense = null;
-        for(int i = 0; i < monthlyRecords.size(); i++) {
-            if (monthlyRecords.get(i).isExpense){
-                int saveExpense = monthlyRecords.get(i).quantity * monthlyRecords.get(i).sumOfOne;
-                String nameSaveExpense = monthlyRecords.get(i).itemName;
-                if(maxExpense <= saveExpense){
+        for (MonthlyRecord monthlyRecord : monthlyRecords) {
+            if (monthlyRecord.isExpense) {
+                int saveExpense = monthlyRecord.quantity * monthlyRecord.sumOfOne;
+                String nameSaveExpense = monthlyRecord.itemName;
+                if (maxExpense <= saveExpense) {
                     maxExpense = saveExpense;
                     nameMaxExpense = nameSaveExpense;
                 }
@@ -109,7 +101,7 @@ public class MonthlyReport {
         }
     }
 
-    ArrayList getReportMonth(int monthNumber){
+    ArrayList<MonthlyRecord> getReportMonth(int monthNumber){
         String content = ReadFile.readFileContentsOrNull("resources/m.20210"+monthNumber+".csv");
         String[] lines = content.split("\n");
         ArrayList<MonthlyRecord> monthlyRecords = new ArrayList<>();

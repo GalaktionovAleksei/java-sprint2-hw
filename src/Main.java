@@ -5,7 +5,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         MonthlyReport monthlyReport = new MonthlyReport();
         YearlyReport yearlyReport = new YearlyReport();
-        Compare compare = new Compare();
 
         while (true){
             printMenu();
@@ -16,13 +15,7 @@ public class Main {
             }else if (userInput == 2){
                 yearlyReport.readReportYear();
             }else if (userInput == 3){
-                if (yearlyReport.recognizeReportYearIsEmpty() && monthlyReport.recognizeReportMonthlyIsEmpty()) {
-                        compare.compareSumIncome(yearlyReport, monthlyReport);
-                        compare.compareSumOutcome(yearlyReport, monthlyReport);
-                }else {
-                    System.out.println("Для сравнения, сначала считайте годовой и месячные отчёты");
-                }
-
+                Compare.compare(yearlyReport,monthlyReport);
             }else if (userInput == 4){
                 monthlyReport.createReportMonth();
             }else if (userInput == 5) {
